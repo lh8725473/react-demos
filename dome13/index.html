@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../build/react.js"></script>
+    <script src="../build/browser.min.js"></script>
+    <script src="../build/jquery.min.js"></script>
+  </head>
+  <body>
+    <script type="text/babel">
+var UserGist = React.createClass({
+  getInitialState: function() {
+    return {
+      lis: null
+    };
+  },
+
+  componentDidMount: function() {
+    var _this = this
+    $.get(this.props.source, function(results) {
+
+      var lis = results.map(function (result) {
+        return  (
+          <li>
+            {result.comments_url}
+          </li>);
+      });
+      _this.setState({
+        lis:lis
+      })
+
+    });
+  },
+
+  render: function() {
+    return (
+      <div>
+        {this.state.lis}
+      </div>
+    );
+  }
+});
+
+React.render(
+  <UserGist source="https://api.github.com/users/octocat/gists" />,
+  document.body
+);
+    </script>
+  </body>
+</html>
